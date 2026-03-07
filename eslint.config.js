@@ -27,6 +27,10 @@ export default [
       parserOptions: {
         parser: tsParser,
       },
+      globals: {
+        ...globals.browser,
+        console: 'readonly',
+      },
     },
   },
   {
@@ -38,6 +42,7 @@ export default [
       parser: tsParser,
       globals: {
         ...globals.node,
+        console: 'readonly',
       },
     },
     rules: {
