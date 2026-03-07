@@ -3,6 +3,7 @@ import vue from 'eslint-plugin-vue';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
+import globals from 'globals';
 
 export default [
   {
@@ -35,6 +36,9 @@ export default [
     },
     languageOptions: {
       parser: tsParser,
+      globals: {
+        ...globals.node,
+      },
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
@@ -51,6 +55,7 @@ export default [
     files: ['**/*.js'],
     languageOptions: {
       globals: {
+        ...globals.node,
         console: 'readonly',
       },
     },
