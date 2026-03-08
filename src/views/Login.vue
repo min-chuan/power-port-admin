@@ -30,6 +30,7 @@ import logo from '@/assets/logo.png';
 import useAuthStore from '@/store/auth';
 import type { FormInstance, FormRules } from 'element-plus';
 import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 interface Form {
   username: string;
@@ -39,6 +40,7 @@ interface Form {
 const form = reactive<Form>({ username: '', password: '' });
 const formRef = ref<FormInstance>();
 const authStore = useAuthStore();
+const router = useRouter();
 
 const rules = reactive<FormRules<Form>>({
   username: [
@@ -53,13 +55,14 @@ const rules = reactive<FormRules<Form>>({
 
 const handleLogin = async () => {
   try {
-    await formRef.value?.validate((valid) => {
+    await formRef.value?.validate(async (valid) => {
       if (valid) {
-        authStore.login(form);
+        await authStore.login(form);
+        router.push('/');
       }
     });
   } catch (err) {
-    console.log(err);
+    console.log('error1', err);
   }
 };
 </script>

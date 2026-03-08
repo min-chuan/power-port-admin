@@ -1,6 +1,7 @@
 import App from '@/App.vue';
 import '@/mock';
 import router from '@/router';
+import '@/router/guard';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
