@@ -12,5 +12,10 @@ router.beforeEach((to) => {
     if (to.path === '/login') {
       return { path: '/' };
     }
+    const needAuth = to.meta.needAuth as string[] | undefined;
+    const hasAuth = needAuth ? authStore.roles.some((item) => needAuth.includes(item)) : true;
+    if (!hasAuth) {
+      return { path: '/' };
+    }
   }
 });

@@ -35,6 +35,9 @@ const routes: RouteRecordRaw[] = [
         path: '/document',
         name: 'Document',
         component: () => import('@/views/document/Document.vue'),
+        meta: {
+          needAuth: ['admin', 'manager'],
+        },
       },
       {
         path: '/equipment',
@@ -70,6 +73,9 @@ const routes: RouteRecordRaw[] = [
         path: '/system',
         name: 'System',
         component: () => import('@/views/system/System.vue'),
+        meta: {
+          needAuth: ['admin'],
+        },
       },
     ],
   },
