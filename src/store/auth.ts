@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', {
       return {
         token: sessionStorage.getItem('token') || '',
         roles: JSON.parse(sessionStorage.getItem('roles') || '[]'),
-        username: '',
+        username: sessionStorage.getItem('username') || '',
         menulist: JSON.parse(sessionStorage.getItem('menulist') || '[]'),
       };
     } catch (err) {
@@ -53,6 +53,13 @@ export const useAuthStore = defineStore('auth', {
       } catch (err) {
         console.log('error', err);
       }
+    },
+    logout() {
+      this.token = '';
+      this.roles = [];
+      this.username = '';
+      this.menulist = [];
+      sessionStorage.clear();
     },
   },
 });

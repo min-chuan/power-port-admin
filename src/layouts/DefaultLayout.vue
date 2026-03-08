@@ -4,7 +4,9 @@
       <Menu />
     </el-aside>
     <el-container>
-      <el-header>Header</el-header>
+      <el-header>
+        <TopHeader />
+      </el-header>
       <el-main>
         <RouterView />
       </el-main>
@@ -13,6 +15,7 @@
 </template>
 <script lang="ts" setup>
 import Menu from '@/components/navMenu/Menu.vue';
+import TopHeader from '@/components/topHeader/TopHeader.vue';
 </script>
 
 <style lang="less" scoped>
