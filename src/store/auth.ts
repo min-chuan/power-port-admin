@@ -1,11 +1,12 @@
 import { loginApi, type LoginParams } from '@/api/user';
+import type { MenuItem } from '@/types/user';
 import { defineStore } from 'pinia';
 
 interface AuthStore {
   token: string;
   roles: string[];
   username: string;
-  menulist: any[];
+  menulist: MenuItem[];
 }
 
 const initialState: AuthStore = {

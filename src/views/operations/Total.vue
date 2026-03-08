@@ -1,0 +1,1 @@
+<template>Total</template>

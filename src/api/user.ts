@@ -1,3 +1,4 @@
+import type { MenuItem } from '@/types/user';
 import { post } from '@/utils/http';
 
 enum API {
@@ -11,7 +12,7 @@ export interface LoginParams {
 
 interface LoginData {
   token: string;
-  menulist: any[];
+  menulist: MenuItem[];
   user: {
     username: string;
     roles: string[];

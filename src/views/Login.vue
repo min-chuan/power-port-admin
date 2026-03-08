@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="form">
-      <div class="logo">
+      <div class="logo center-both">
         <img :src="logo" alt="" width="70px" height="70px" />
         <h1 class="ml">动力港能源管理平台</h1>
       </div>
@@ -85,9 +85,6 @@ const handleLogin = async () => {
     height: 300px;
     padding: 50px;
     .logo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       h1 {
         color: rgb(14, 53, 148);
       }
