@@ -27,6 +27,7 @@
 
 <script lang="ts" setup>
 import logo from '@/assets/logo.png';
+import useAuthStore from '@/store/auth';
 import type { FormInstance, FormRules } from 'element-plus';
 import { reactive, ref } from 'vue';
 
@@ -37,6 +38,7 @@ interface Form {
 
 const form = reactive<Form>({ username: '', password: '' });
 const formRef = ref<FormInstance>();
+const authStore = useAuthStore();
 
 const rules = reactive<FormRules<Form>>({
   username: [
@@ -50,11 +52,15 @@ const rules = reactive<FormRules<Form>>({
 });
 
 const handleLogin = async () => {
-  await formRef.value?.validate((valid) => {
-    if (valid) {
-      console.log('submit!');
-    }
-  });
+  try {
+    await formRef.value?.validate((valid) => {
+      if (valid) {
+        authStore.login(form);
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 </script>
 
