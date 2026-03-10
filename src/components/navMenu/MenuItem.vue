@@ -8,7 +8,12 @@
     </template>
     <MenuItem v-for="item2 in item.children" :key="item2.url" :item="item2" />
   </el-sub-menu>
-  <el-menu-item v-else v-show="item.name !== '订单详情'" :index="item.url">
+  <el-menu-item
+    v-else
+    v-show="item.name !== '订单详情'"
+    :index="item.url"
+    @click="handleClick(item)"
+  >
     <el-icon>
       <component :is="item.icon" />
     </el-icon>
@@ -16,6 +21,7 @@
   </el-menu-item>
 </template>
 <script lang="ts" setup>
+import useTabsStore from '@/store/tabs';
 import type { MenuItem } from '@/types/user';
 defineOptions({
   name: 'MenuItem',
@@ -23,6 +29,10 @@ defineOptions({
 defineProps<{
   item: MenuItem;
 }>();
+const tabsStore = useTabsStore();
+const handleClick = (item: MenuItem) => {
+  tabsStore.add(item);
+};
 </script>
 <style lang="less" scoped>
 .el-menu-item.is-active {
