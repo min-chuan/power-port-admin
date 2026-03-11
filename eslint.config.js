@@ -29,7 +29,6 @@ export default [
       },
       globals: {
         ...globals.browser,
-        console: 'readonly',
       },
     },
   },
@@ -41,8 +40,7 @@ export default [
     languageOptions: {
       parser: tsParser,
       globals: {
-        ...globals.node,
-        console: 'readonly',
+        ...globals.browser,
       },
     },
     rules: {
@@ -61,8 +59,7 @@ export default [
     files: ['**/*.js'],
     languageOptions: {
       globals: {
-        ...globals.node,
-        console: 'readonly',
+        ...globals.browser,
       },
     },
   },

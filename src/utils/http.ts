@@ -6,7 +6,7 @@ interface ResponseData<T> {
   data?: T;
 }
 
-export function get<T, U>(url: string, params: T): Promise<ResponseData<U>> {
+export function get<T, U>(url: string, params?: T): Promise<ResponseData<U>> {
   return service.get(url, { params });
 }
 

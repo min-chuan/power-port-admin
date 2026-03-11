@@ -16,7 +16,6 @@
           <span>{{ item.name }}</span>
         </span>
       </template>
-      User
     </el-tab-pane>
   </el-tabs>
   <RouterView />
@@ -67,7 +66,7 @@ const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
 </script>
 <style lang="less" scoped>
 .demo-tabs {
-  ::v-deep .is-active {
+  :deep(.is-active) {
     background-color: rgb(34, 136, 255);
     color: #fff;
   }
