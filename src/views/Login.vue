@@ -29,7 +29,7 @@
 import logo from '@/assets/logo.png';
 import useAuthStore from '@/store/auth';
 import type { FormInstance, FormRules } from 'element-plus';
-import { reactive, ref } from 'vue';
+import { reactive, useTemplateRef } from 'vue';
 import { useRouter } from 'vue-router';
 
 interface Form {
@@ -38,7 +38,8 @@ interface Form {
 }
 
 const form = reactive<Form>({ username: '', password: '' });
-const formRef = ref<FormInstance>();
+const formRef = useTemplateRef<FormInstance>('formRef');
+
 const authStore = useAuthStore();
 const router = useRouter();
 

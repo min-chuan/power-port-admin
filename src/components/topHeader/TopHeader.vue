@@ -19,7 +19,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item icon="User" command="personal">个人中心</el-dropdown-item>
-            <el-dropdown-item icon="SwitchButton" command="logout">推出登录</el-dropdown-item>
+            <el-dropdown-item icon="SwitchButton" command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

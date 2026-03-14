@@ -23,6 +23,7 @@
 <script lang="ts" setup>
 import useAuthStore from '@/store/auth';
 import useTabsStore from '@/store/tabs';
+import type { MenuItem } from '@/types/user';
 import type { TabsPaneContext } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
@@ -36,7 +37,18 @@ const route = useRoute();
 const initialTabs = () => {
   if (tabs.value.length === 0) {
     const path = route.path;
-    const item = authStore.menulist.find((item) => item.url === path);
+    const findMenuItem = (menulist: MenuItem[], path: string): MenuItem | undefined => {
+      const item = menulist.find((item) => path.includes(item.url));
+      if (item && item.url === path) {
+        return item;
+      }
+      if (item && item.url !== path && item.children) {
+        return findMenuItem(item.children, path);
+      }
+      return;
+    };
+    const item = findMenuItem(authStore.menulist, path);
+
     if (item) {
       tabsStore.add(item);
     }

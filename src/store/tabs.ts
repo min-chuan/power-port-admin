@@ -13,7 +13,7 @@ const initialState: TabsState = {
 };
 
 const useTabsStore = defineStore('tabs', {
-  state: () => {
+  state: (): TabsState => {
     return {
       ...initialState,
     };
