@@ -1,6 +1,6 @@
 import type { MockjsRequestOptions } from 'mockjs';
 import Mock from 'mockjs';
-import { adminMenulist, chargingStation, userMenulist } from './constant';
+import { adminMenulist, chargingStation, chargingStation2, userMenulist } from './constant';
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 Mock.setup({
@@ -104,7 +104,7 @@ Mock.mock(`${baseURL}/stationList`, 'post', (options: any) => {
   const paginatedItems = chargingStation.slice(start, start + pageSize);
   return {
     code: 200,
-    success: true,
+    message: true,
     data: {
       list: paginatedItems,
       total,
@@ -127,5 +127,51 @@ Mock.mock(`${baseURL}/station/delete`, 'post', (options: any) => {
   return {
     code: 200,
     message: '操作成功',
+  };
+});
+
+/* --------------------- 营收统计 ------------------------------- */
+// 获取营收统计图表数据
+Mock.mock(`${baseURL}/revenueChart`, 'get', () => {
+  return {
+    code: 200,
+    message: '操作成功',
+    data: {
+      list: [
+        {
+          name: '销售',
+          data: [60, 40, 120, 140, 160, 80, 140],
+        },
+        {
+          name: '访问量',
+          data: [600, 400, 600, 700, 800, 400, 700],
+        },
+      ],
+    },
+  };
+});
+
+// 获取营收统计列表
+const originalChargingStation2 = JSON.parse(JSON.stringify(chargingStation2));
+Mock.mock(`${baseURL}/revenueList`, 'post', (options: any) => {
+  let chargingStation2 = originalChargingStation2;
+  const data = options.body ? JSON.parse(options.body) : {};
+  const { name = '', page = 1, pageSize = 10 } = data;
+  // 根据条件过滤数据
+  console.log('营收统计表格接口参数', data);
+  if (name) {
+    chargingStation2 = chargingStation2.filter((item: any) => item.name.includes(name));
+  }
+  // 实现分页
+  const total = chargingStation2.length;
+  const start = (page - 1) * pageSize;
+  const paginatedItems = chargingStation2.slice(start, start + pageSize);
+  return {
+    code: 200,
+    message: true,
+    data: {
+      list: paginatedItems,
+      total,
+    },
   };
 });

@@ -1,10 +1,12 @@
-import type { ChargingStationItem } from '@/types/station';
-import { post } from '@/utils/http';
+import type { ChargingStationItem, RevenueItem } from '@/types/station';
+import { get, post } from '@/utils/http';
 
 enum API {
   List = '/stationList',
   Edit = '/station/edit',
   Delete = '/station/delete',
+  RevenueChart = '/revenueChart',
+  RevenueList = '/revenueList',
 }
 
 interface ListParams {
@@ -35,4 +37,24 @@ interface deleteParams {
 }
 export function deleteApi(data: deleteParams) {
   return post<deleteParams, undefined>(API.Delete, data);
+}
+
+interface RevenueChartResponse {
+  list: { name: string; data: number[] }[];
+}
+export function chartApi() {
+  return get<undefined, RevenueChartResponse>(API.RevenueChart);
+}
+
+interface RevenueListParams {
+  page: number;
+  pageSize: number;
+  name?: string;
+}
+interface RevenueListResponse {
+  list: RevenueItem[];
+  total: number;
+}
+export function revenueListApi(data: RevenueListParams) {
+  return post<RevenueListParams, RevenueListResponse>(API.RevenueList, data);
 }
