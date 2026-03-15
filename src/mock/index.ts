@@ -5,6 +5,7 @@ import {
   chargingPile,
   chargingStation,
   chargingStation2,
+  stations,
   userMenulist,
 } from './constant';
 const baseURL = import.meta.env.VITE_BASE_URL;
@@ -183,10 +184,21 @@ Mock.mock(`${baseURL}/revenueList`, 'post', (options: any) => {
 });
 
 /* --------------------- 充电桩管理 ------------------------------- */
+// 获取充电桩列表
 Mock.mock(`${baseURL}/currentList`, 'post', () => {
   return {
     code: 200,
     success: true,
     data: chargingPile,
+  };
+});
+
+/* --------------------- 电子地图 ------------------------------- */
+// 获取充电桩坐标
+Mock.mock('https://www.demo.com/mapList', 'post', () => {
+  return {
+    code: 200,
+    success: true,
+    data: stations,
   };
 });
