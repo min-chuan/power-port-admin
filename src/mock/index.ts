@@ -1,6 +1,12 @@
 import type { MockjsRequestOptions } from 'mockjs';
 import Mock from 'mockjs';
-import { adminMenulist, chargingStation, chargingStation2, userMenulist } from './constant';
+import {
+  adminMenulist,
+  chargingPile,
+  chargingStation,
+  chargingStation2,
+  userMenulist,
+} from './constant';
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 Mock.setup({
@@ -173,5 +179,14 @@ Mock.mock(`${baseURL}/revenueList`, 'post', (options: any) => {
       list: paginatedItems,
       total,
     },
+  };
+});
+
+/* --------------------- 充电桩管理 ------------------------------- */
+Mock.mock(`${baseURL}/currentList`, 'post', () => {
+  return {
+    code: 200,
+    success: true,
+    data: chargingPile,
   };
 });

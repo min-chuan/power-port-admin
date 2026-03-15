@@ -1,4 +1,4 @@
-import type { ChargingStationItem, RevenueItem } from '@/types/station';
+import type { ChargingStationItem, CurrentItem, RevenueItem } from '@/types/station';
 import { get, post } from '@/utils/http';
 
 enum API {
@@ -7,6 +7,7 @@ enum API {
   Delete = '/station/delete',
   RevenueChart = '/revenueChart',
   RevenueList = '/revenueList',
+  CurrentList = '/currentList',
 }
 
 interface ListParams {
@@ -57,4 +58,8 @@ interface RevenueListResponse {
 }
 export function revenueListApi(data: RevenueListParams) {
   return post<RevenueListParams, RevenueListResponse>(API.RevenueList, data);
+}
+
+export function currentListApi() {
+  return post<undefined, CurrentItem[]>(API.CurrentList);
 }

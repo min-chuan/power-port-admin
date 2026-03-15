@@ -24,3 +24,18 @@ export interface RevenueItem {
   percent: number; // 增长比例
   mpercent: number;
 }
+
+export interface CurrentItem {
+  id: string;
+  name: string;
+  list: {
+    id: string;
+    voltage: string;
+    current: string;
+    power: string;
+    tem: string;
+    status: number;
+    record: { time: string; msg: string }[];
+    percent?: string;
+  }[];
+}
