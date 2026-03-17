@@ -1,29 +1,40 @@
-import type { MenuItem } from '@/types/user';
+import router from '@/router';
+import type { TabItem } from '@/types/tabs';
+import findMenu from '@/utils/findMenu';
 import { defineStore } from 'pinia';
 import type { Router } from 'vue-router';
+import useAuthStore from './auth';
 
 interface TabsState {
-  tabs: MenuItem[];
+  tabs: TabItem[];
   activeName: string;
 }
 
-const initialState: TabsState = {
-  tabs: [],
-  activeName: '',
+const initialState = (): TabsState => {
+  return {
+    tabs: [],
+    activeName: '',
+  };
 };
 
 const useTabsStore = defineStore('tabs', {
-  state: (): TabsState => {
-    return {
-      ...initialState,
-    };
-  },
+  state: initialState,
   actions: {
-    add(data: MenuItem) {
+    initialTabs() {
+      const authStore = useAuthStore();
+      if (this.tabs.length === 0) {
+        const path = router.currentRoute.value.path;
+        const item = findMenu(path, authStore.menulist);
+        if (item) {
+          this.add(item);
+        }
+      }
+    },
+    add(data: TabItem) {
       if (!this.tabs.some((item) => item.url === data.url)) {
         this.tabs.push(data);
-        this.setActiveName(data.url);
       }
+      this.setActiveName(data.url);
     },
     remove(url: string, router: Router) {
       if (this.tabs.length === 1) return;

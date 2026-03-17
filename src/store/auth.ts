@@ -9,27 +9,22 @@ interface AuthStore {
   menulist: MenuItem[];
 }
 
-const initialState: AuthStore = {
-  token: '',
-  roles: [],
-  username: '',
-  menulist: [],
+const initialState = (): AuthStore => {
+  try {
+    return {
+      token: sessionStorage.getItem('token') || '',
+      roles: JSON.parse(sessionStorage.getItem('roles') || '[]'),
+      username: sessionStorage.getItem('username') || '',
+      menulist: JSON.parse(sessionStorage.getItem('menulist') || '[]'),
+    };
+  } catch (err) {
+    console.log('error', err);
+    return { token: '', roles: [], username: '', menulist: [] };
+  }
 };
 
 export const useAuthStore = defineStore('auth', {
-  state: (): AuthStore => {
-    try {
-      return {
-        token: sessionStorage.getItem('token') || '',
-        roles: JSON.parse(sessionStorage.getItem('roles') || '[]'),
-        username: sessionStorage.getItem('username') || '',
-        menulist: JSON.parse(sessionStorage.getItem('menulist') || '[]'),
-      };
-    } catch (err) {
-      console.log('error', err);
-      return { ...initialState };
-    }
-  },
+  state: initialState,
   getters: {},
   actions: {
     async login(data: LoginParams) {

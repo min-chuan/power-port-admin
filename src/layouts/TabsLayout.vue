@@ -18,60 +18,42 @@
       </template>
     </el-tab-pane>
   </el-tabs>
-  <RouterView />
+  <RouterView v-slot="{ Component }">
+    <KeepAlive :include="cacheList">
+      <component :is="Component" :key="$route.fullPath" />
+    </KeepAlive>
+  </RouterView>
 </template>
 <script lang="ts" setup>
-import useAuthStore from '@/store/auth';
+import useCacheStore from '@/store/cache';
 import useTabsStore from '@/store/tabs';
-import type { MenuItem } from '@/types/user';
 import type { TabsPaneContext } from 'element-plus';
 import { storeToRefs } from 'pinia';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const tabsStore = useTabsStore();
-const authStore = useAuthStore();
+const cacheStore = useCacheStore();
 const { tabs, activeName } = storeToRefs(tabsStore);
+const { cacheList } = storeToRefs(cacheStore);
 const router = useRouter();
-const route = useRoute();
 
-const initialTabs = () => {
-  if (tabs.value.length === 0) {
-    const path = route.path;
-    const findMenuItem = (menulist: MenuItem[], path: string): MenuItem | undefined => {
-      const item = menulist.find((item) => path.includes(item.url));
-      if (item && item.url === path) {
-        return item;
-      }
-      if (item && item.url !== path && item.children) {
-        return findMenuItem(item.children, path);
-      }
-      return;
-    };
-    const item = findMenuItem(authStore.menulist, path);
-
-    if (item) {
-      tabsStore.add(item);
-    }
-  }
-};
-
-initialTabs();
+/* 页签导航功能 */
+tabsStore.initialTabs();
 
 const handleClick = (tab: TabsPaneContext) => {
   if (tab.index) {
     const index = +tab.index;
     const currentTab = tabs.value[index];
     if (currentTab) {
-      const { url } = currentTab;
+      const { url, query } = currentTab;
       tabsStore.setActiveName(url);
-      router.push(url);
+      router.push({ path: url, query });
     }
   }
 };
 
 const handleTabsEdit = (targetName: string, action: 'remove' | 'add') => {
   if (action === 'remove') {
-    console.log(targetName, action);
     tabsStore.remove(targetName, router);
   }
 };

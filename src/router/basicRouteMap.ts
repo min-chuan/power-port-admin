@@ -58,6 +58,9 @@ const routes: RouteRecordRaw[] = [
         path: '/operations/Orders',
         name: 'Orders',
         component: () => import('@/views/operations/Orders.vue'),
+        meta: {
+          keepAlive: { pages: ['Detail'] }, // 表示访问哪些页面时需要缓存
+        },
       },
       {
         path: '/operations/Total',

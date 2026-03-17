@@ -23,9 +23,7 @@
 <script lang="ts" setup>
 import useTabsStore from '@/store/tabs';
 import type { MenuItem } from '@/types/user';
-defineOptions({
-  name: 'MenuItem',
-});
+
 defineProps<{
   item: MenuItem;
 }>();

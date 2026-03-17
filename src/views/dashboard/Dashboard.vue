@@ -1,5 +1,5 @@
 <template>
-  <el-row gutter="20">
+  <el-row :gutter="20">
     <el-col :span="18">
       <el-card>
         <div class="title mb">
@@ -452,7 +452,6 @@ const getChartOption3 = async () => {
     const res = await getChartData3();
     if (res.data) {
       (chartOption.series as any)[0].data[0].value = res.data.list;
-      console.log('666', res.data);
       return chartOption;
     }
   } catch (err) {

@@ -12,7 +12,6 @@ export default function useChart(
     if (chartRef.value) {
       const chartOption = await getChartOption();
       if (chartOption) {
-        console.log(chartOption);
         myChart.value = echarts.init(chartRef.value);
         myChart.value.setOption(chartOption);
       }

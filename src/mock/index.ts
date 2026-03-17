@@ -195,10 +195,49 @@ Mock.mock(`${baseURL}/currentList`, 'post', () => {
 
 /* --------------------- 电子地图 ------------------------------- */
 // 获取充电桩坐标
-Mock.mock('https://www.demo.com/mapList', 'post', () => {
+Mock.mock(`${baseURL}/mapList`, 'post', () => {
   return {
     code: 200,
     success: true,
     data: stations,
+  };
+});
+
+/* --------------------- 订单管理 ------------------------------- */
+//获取订单列表
+Mock.mock(`${baseURL}/orderList`, 'post', (options: any) => {
+  const data = JSON.parse(options.body);
+  const { pageSize } = data;
+  console.log('获取订单列表参数', data);
+  return {
+    code: 200,
+    message: '成功',
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          orderNo: '@string("number", 6)', //订单号
+          date: '@date("yyyy-MM-dd")', //订单日期
+          startTime: '08:00:23', //开始时间
+          endTime: '09:10:11', //结束时间
+          'equipmentNo|1': ['B109', 'C227', 'C106', 'D158'], //设备编号
+          'money|1': [66.5, 88.9, 22.7, 36.5, 42.0], //金额
+          'pay|1': ['微信', '支付宝', '储值卡'], //支付方式
+          'status|1': [2, 3, 4], //订单状态
+        },
+      ],
+      total: 54,
+    }),
+    // 生成55条数据
+  };
+});
+
+//订单管理-批量删除接口
+Mock.mock(`${baseURL}/batchDelete`, 'post', (options: any) => {
+  const data = JSON.parse(options.body);
+  console.log('订单管理批量删除接口', data);
+  return {
+    code: 200,
+    message: '成功',
+    data: '操作成功',
   };
 });
