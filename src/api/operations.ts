@@ -1,9 +1,10 @@
 import type { OrderItem } from '@/types/operations';
-import { post } from '@/utils/http';
+import { get, post } from '@/utils/http';
 
 enum API {
   OrderList = '/orderList',
   BatchDelete = '/batchDelete',
+  CityList = '/cityList',
 }
 
 interface OrderListParams {
@@ -25,4 +26,8 @@ export function orderListApi(data: OrderListParams) {
 
 export function batchDeleteApi(data: string[]) {
   return post(API.BatchDelete, data);
+}
+
+export function cityListApi() {
+  return get(API.CityList);
 }

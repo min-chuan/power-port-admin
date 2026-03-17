@@ -5,6 +5,7 @@ import {
   chargingPile,
   chargingStation,
   chargingStation2,
+  cityList,
   stations,
   userMenulist,
 } from './constant';
@@ -239,5 +240,15 @@ Mock.mock(`${baseURL}/batchDelete`, 'post', (options: any) => {
     code: 200,
     message: '成功',
     data: '操作成功',
+  };
+});
+
+/* --------------------- 计费管理 ------------------------------- */
+//计费管理城市接口
+Mock.mock(`${baseURL}/cityList`, 'get', () => {
+  return {
+    code: 200,
+    message: '操作成功',
+    data: cityList,
   };
 });
