@@ -120,7 +120,7 @@ import { alarmListApi } from '@/api/alarm';
 import StepForm from '@/components/stepForm/StepForm.vue';
 import type { AlarmItem } from '@/types/alarm';
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
-import { reactive, ref, useTemplateRef } from 'vue';
+import { onMounted, reactive, ref, useTemplateRef } from 'vue';
 /* 单选按钮组 */
 const radio1 = ref(1);
 
@@ -149,7 +149,9 @@ const loadData = async () => {
     console.log('error', err);
   }
 };
-loadData();
+onMounted(() => {
+  loadData();
+});
 
 /* 抽屉组件 */
 const alarm = ref<AlarmItem | null>(null);

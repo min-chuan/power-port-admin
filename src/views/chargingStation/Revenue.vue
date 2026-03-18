@@ -143,7 +143,7 @@ import usePagination from '@/hooks/usePagination';
 import type { RevenueItem } from '@/types/station';
 import toThousands from '@/utils/toThousands';
 import type { EChartsCoreOption } from 'echarts';
-import { reactive, ref, useTemplateRef } from 'vue';
+import { onMounted, reactive, ref, useTemplateRef } from 'vue';
 /* 图表显示功能 */
 const chartRef = useTemplateRef('chartRef');
 const getChartOption = async () => {
@@ -238,7 +238,9 @@ const loadData = async () => {
 const { total, setTotal, pageInfo, handleSizeChange, handleCurrentChange } =
   usePagination(loadData);
 
-loadData();
+onMounted(() => {
+  loadData();
+});
 </script>
 
 <style lang="less" scoped>

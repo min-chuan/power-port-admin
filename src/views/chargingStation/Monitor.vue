@@ -98,7 +98,7 @@ import { deleteApi, listApi } from '@/api/chargingstation';
 import useStationStore from '@/store/station';
 import type { ChargingStationItem } from '@/types/station';
 import { ElMessage } from 'element-plus';
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import StationForm from './components/StationForm.vue';
 const select = ref('name');
 const total = ref(0);
@@ -170,7 +170,9 @@ const loadData = async () => {
   }
 };
 
-loadData();
+onMounted(() => {
+  loadData();
+});
 
 /* 对话框功能 */
 const stationStore = useStationStore();

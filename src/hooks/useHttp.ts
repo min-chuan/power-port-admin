@@ -1,5 +1,5 @@
 import { post } from '@/utils/http';
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 export function useHttp<T, U extends object>(url: string, initialParams: U) {
@@ -47,7 +47,9 @@ export function useHttp<T, U extends object>(url: string, initialParams: U) {
     loadData();
   };
 
-  loadData();
+  onMounted(() => {
+    loadData();
+  });
 
   return {
     dataList,

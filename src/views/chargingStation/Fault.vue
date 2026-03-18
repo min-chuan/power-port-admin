@@ -75,7 +75,7 @@ import free from '@/assets/free.png';
 import ing from '@/assets/ing.png';
 import outline from '@/assets/outline.png';
 import type { CurrentItem } from '@/types/station';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 /* 查询框功能 */
 const loading = ref(false);
@@ -147,7 +147,9 @@ const loadData = async () => {
 const statusMap = ['全部', '空闲中', '充电中', '连接中', '排队中', '已预约', '故障/离线'];
 const imgMap = ['', free, ing, ing, ing, ing, outline];
 
-loadData();
+onMounted(() => {
+  loadData();
+});
 </script>
 <style lang="less" scoped>
 .item {

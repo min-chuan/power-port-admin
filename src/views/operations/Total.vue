@@ -101,7 +101,7 @@ import {
   type FormRules,
   type TreeNodeData,
 } from 'element-plus';
-import { reactive, ref, useTemplateRef, watch } from 'vue';
+import { onMounted, reactive, ref, useTemplateRef, watch } from 'vue';
 
 /* 筛选框 */
 const filterText = ref('');
@@ -152,7 +152,9 @@ const handleCheckChange = (data: Tree, checked: boolean, indeterminate: boolean)
   console.log(data, checked, indeterminate);
 };
 
-loadData();
+onMounted(() => {
+  loadData();
+});
 
 /* 表单 */
 interface FormType {
