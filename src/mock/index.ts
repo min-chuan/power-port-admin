@@ -262,3 +262,37 @@ Mock.mock(`${baseURL}/alarmList`, 'get', () => {
     data: alarmList,
   };
 });
+
+/* --------------------- 会员卡管理 ------------------------------- */
+//会员卡管理接口
+Mock.mock(`${baseURL}/member`, 'post', (req: any) => {
+  const data = JSON.parse(req.body);
+  const { pageSize } = data;
+  console.log('会员管理接口', data);
+  return {
+    code: 200,
+    message: '操作成功',
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          memberCardNumber: '@id', // 会员卡号
+          'cardType|1': ['普通卡', 'VIP卡', '季卡'], // 卡类型
+          issueDate: '@date("yyyy-MM-dd")', // 开卡日期
+          holderName: '@cname', // 持有人姓名
+          holderPhone: /^1[3-9]\d{9}$/, // 持有人电话
+          cardBalance: '@float(100, 10000, 2, 2)', // 卡余额
+          'transactionRecords|1-5': [
+            {
+              // 消费记录
+              'transactionDate|1': ['2024-02-18', '2024-04-08', '2024-10-03', '2024-10-15'], // 消费日期
+              transactionAmount: '@float(10, 500, 2, 2)', // 消费金额
+              'transactionType|1': ['充电扣款', '服务费扣款', '停车费扣款', '其他'], // 消费类型
+            },
+          ],
+          validUntil: '@date("yyyy-MM-dd")', // 有效期至
+        },
+      ],
+      total: 53,
+    }),
+  };
+});
