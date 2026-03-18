@@ -2,6 +2,7 @@ import type { MockjsRequestOptions } from 'mockjs';
 import Mock from 'mockjs';
 import {
   adminMenulist,
+  alarmList,
   chargingPile,
   chargingStation,
   chargingStation2,
@@ -250,5 +251,14 @@ Mock.mock(`${baseURL}/cityList`, 'get', () => {
     code: 200,
     message: '操作成功',
     data: cityList,
+  };
+});
+
+/* --------------------- 报警管理 ------------------------------- */
+Mock.mock(`${baseURL}/alarmList`, 'get', () => {
+  return {
+    code: 200,
+    message: '操作成功',
+    data: alarmList,
   };
 });

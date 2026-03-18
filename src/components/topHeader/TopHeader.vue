@@ -36,7 +36,6 @@ const { username } = storeToRefs(authStore);
 const router = useRouter();
 
 const handleCommand = (command: string) => {
-  console.log(command);
   if (command === 'personal') {
     router.push('/personal');
   } else if (command === 'logout') {
