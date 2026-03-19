@@ -51,7 +51,6 @@ const loadData = async () => {
   try {
     const res = await documentApi();
     if (res.data) {
-      console.log('xxx', res.data);
       sort.value = res.data;
     }
   } catch (err) {

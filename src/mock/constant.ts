@@ -82,8 +82,8 @@ export const adminMenulist = [
   },
 ];
 
-//运营专员的菜单
-export const userMenulist = [
+//管理员的菜单
+export const managerMenulist = [
   {
     name: '数据看板',
     url: '/dashboard',
@@ -143,6 +143,55 @@ export const userMenulist = [
     url: '/alarm',
     icon: 'Phone',
   },
+  {
+    name: '会员卡管理',
+    url: '/equipment',
+    icon: 'Magnet',
+  },
+  {
+    name: '个人中心',
+    url: '/personal',
+    icon: 'User',
+  },
+];
+
+//用户的菜单
+export const userMenulist = [
+  {
+    name: '数据看板',
+    url: '/dashboard',
+    icon: 'DataLine',
+  },
+  {
+    name: '充电站管理',
+    url: '/chargingstation',
+    icon: 'Lightning',
+    children: [
+      {
+        name: '充电站监控',
+        url: '/chargingstation/monitor',
+        icon: 'VideoCamera',
+      },
+
+      {
+        name: '充电桩管理',
+        url: '/chargingstation/fault',
+        icon: 'Warning',
+      },
+    ],
+  },
+  {
+    name: '电子地图',
+    url: '/map',
+    icon: 'MapLocation',
+  },
+
+  {
+    name: '报警管理',
+    url: '/alarm',
+    icon: 'Phone',
+  },
+
   {
     name: '会员卡管理',
     url: '/equipment',

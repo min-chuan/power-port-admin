@@ -1,3 +1,4 @@
+import type { MenuItem } from '@/types/user';
 import type { MockjsRequestOptions } from 'mockjs';
 import Mock from 'mockjs';
 import {
@@ -7,6 +8,7 @@ import {
   chargingStation,
   chargingStation2,
   cityList,
+  managerMenulist,
   stations,
   userMenulist,
 } from './constant';
@@ -14,6 +16,19 @@ const baseURL = import.meta.env.VITE_BASE_URL;
 
 Mock.setup({
   timeout: '200-600',
+});
+
+// 自定义生成随机账号函数
+Mock.Random.extend({
+  account: function () {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const length = Mock.mock('@natural(6, 10)');
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  },
 });
 
 Mock.mock(`${baseURL}/login`, 'post', (options: MockjsRequestOptions) => {
@@ -34,17 +49,17 @@ Mock.mock(`${baseURL}/login`, 'post', (options: MockjsRequestOptions) => {
       },
     };
   }
-  if (username === 'user' && password === 'user123456') {
+  if (username === 'manager' && password === 'manager123456') {
     return {
       code: 200,
       message: '登录成功',
       data: {
         user: {
           username: '常怀初',
-          roles: ['user'],
+          roles: ['manager'],
         },
-        token: 'usertoken123456',
-        menulist: userMenulist,
+        token: 'managertoken123456',
+        menulist: managerMenulist,
       },
     };
   }
@@ -308,5 +323,88 @@ Mock.mock(`${baseURL}/document`, 'get', () => {
       important: ['一级', '二级', '三级', '四级'], //重要程度
       publish: ['站内信', '公众号', '小程序', 'H5', '官网'], //发布渠道
     },
+  };
+});
+
+//权限设置页面
+
+Mock.mock(`${baseURL}/permissionList`, 'post', (req: any) => {
+  const data = JSON.parse(req.body);
+  const { pageSize } = data;
+  console.log('权限设置接口收到参数', data);
+  return {
+    code: 200,
+    message: '操作成功',
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          name: '@cname', // 姓名
+          account: '@account', //账号
+          phone: /^1[3-9]\d{9}$/, // 电话
+          idNo: '@id', // 身份证号
+          'position|1': [
+            '客服专员',
+            '客服经理',
+            '市场专员',
+            '市场经理',
+            '运营专员',
+            '运营经理',
+            '技术工程师',
+            '技术经理',
+            'Boss',
+          ], //职位
+          'department|1': ['总裁办', '技术部', '市场部', '维修部', '运营部', '客服部'], //所属部门
+          'pageAuthority|1': ['admin', 'manager', 'user', '自定义权限'], //页面权限
+          'btnAuthority|1': ['add', 'delete', 'edit', 'all', '自定义权限'], //按钮权限
+        },
+      ],
+      total: 41,
+    }),
+  };
+});
+
+/* --------------------- 系统管理 ------------------------------- */
+// 获取所有菜单数据
+Mock.mock(`${baseURL}/allMenuList`, 'get', () => {
+  return {
+    code: 200,
+    message: '操作成功',
+    data: adminMenulist,
+  };
+});
+
+//获取当前用户权限
+Mock.mock(`${baseURL}/userAuth`, 'post', (req: any) => {
+  const data = JSON.parse(req.body);
+  const { pageAuthority } = data;
+  console.log('后端收到当前权限参数', data);
+  const authMap: Record<string, MenuItem[]> = {
+    user: userMenulist,
+    manager: managerMenulist,
+    admin: adminMenulist,
+  };
+  const btnAuthMap: Record<string, string[]> = {
+    user: ['add'],
+    manager: ['add', 'edit'],
+    admin: ['all', 'add', 'edit', 'delete'],
+  };
+  return {
+    code: 200,
+    message: '操作成功',
+    data: {
+      list: authMap[pageAuthority],
+      btn: btnAuthMap[pageAuthority],
+    },
+  };
+});
+
+//权限设置接口
+Mock.mock(`${baseURL}/setAuth`, 'post', (req: any) => {
+  const data = JSON.parse(req.body);
+  console.log('权限设置接口修改账号权限', data);
+  return {
+    code: 200,
+    message: '操作成功',
+    data: null,
   };
 });

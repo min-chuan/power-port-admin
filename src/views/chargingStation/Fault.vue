@@ -117,26 +117,6 @@ const loadData = async () => {
       value.value = res.data[0]!.id;
       dataList.value = res.data[0]!.list;
       currentList.value = res.data[0]!.list;
-
-      const data = res.data.map((item) => {
-        return {
-          ...item,
-          list: item.list.map((item2) => {
-            return {
-              ...item2,
-              record: [
-                { time: '12:08:17', msg: '充电80度，消费80元' },
-                { time: '13:12:09', msg: '充电50度，消费50元' },
-                { time: '13:15:22', msg: '充电60度，消费60元' },
-                { time: '16:22:33', msg: '充电70度，消费70元' },
-                { time: '17:27:17', msg: '充电90度，消费90元' },
-                { time: '18:08:33', msg: '充电100度，消费100元' },
-              ],
-            };
-          }),
-        };
-      });
-      console.log(data);
     }
   } catch (err) {
     console.log('error', err);
