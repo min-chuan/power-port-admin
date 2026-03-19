@@ -59,10 +59,6 @@ const handleClose = () => {
 };
 
 /* 页面权限 */
-interface Tree {
-  label: string;
-  children: Tree[];
-}
 const treeProps = {
   label: 'name',
   children: 'children',
