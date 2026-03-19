@@ -41,7 +41,7 @@ Mock.mock(`${baseURL}/login`, 'post', (options: MockjsRequestOptions) => {
       message: '登录成功',
       data: {
         user: {
-          username: '民川',
+          username: 'admin',
           roles: ['admin'],
         },
         token: 'admintoken123456',
@@ -55,11 +55,25 @@ Mock.mock(`${baseURL}/login`, 'post', (options: MockjsRequestOptions) => {
       message: '登录成功',
       data: {
         user: {
-          username: '常怀初',
+          username: 'manager',
           roles: ['manager'],
         },
         token: 'managertoken123456',
         menulist: managerMenulist,
+      },
+    };
+  }
+  if (username === 'user' && password === 'user123456') {
+    return {
+      code: 200,
+      message: '登录成功',
+      data: {
+        user: {
+          username: 'user',
+          roles: ['user'],
+        },
+        token: 'usertoken123456',
+        menulist: userMenulist,
       },
     };
   }

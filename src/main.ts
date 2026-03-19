@@ -1,4 +1,5 @@
 import App from '@/App.vue';
+import permission from '@/directives/permission';
 import '@/mock';
 import router from '@/router';
 import '@/router/guard';
@@ -14,6 +15,7 @@ const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
+app.directive('permission', permission);
 app.use(pinia);
 app.use(ElementPlus);
 app.use(router);
